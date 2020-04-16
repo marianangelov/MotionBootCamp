@@ -1,8 +1,20 @@
 import React from 'react';
 
-function renderTableData(props) {
 
-    return props.data.map((data) => {
+
+function renderTableData(props) {
+    let dat = props.data;
+
+    function filterTable(dep) {
+        fetch(`http://localhost:5500/filter/${dep}`)
+            .then(s => s.json())
+            .then(res => dat = res)
+            .catch(console.error)
+    }
+    console.log(dat);
+    
+
+    return dat.map((data) => {
         const { id, first_name, last_name, email, job_title, department } = data
         return (
             <tr key={id}>
@@ -11,7 +23,7 @@ function renderTableData(props) {
                 <td>{last_name}</td>
                 <td>{email}</td>
                 <td>{job_title}</td>
-                <td className="filter" onClick={() => this.filterTable(department)}>{department}</td>
+                <td className="filter" onClick={() => filterTable(department)}>{department}</td>
             </tr>
         )
     })
