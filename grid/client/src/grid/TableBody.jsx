@@ -1,20 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 
 function renderTableData(props) {
-    let dat = props.data;
 
-    function filterTable(dep) {
-        fetch(`http://localhost:5500/filter/${dep}`)
-            .then(s => s.json())
-            .then(res => dat = res)
-            .catch(console.error)
-    }
-    console.log(dat);
-    
+    const { data } = props
 
-    return dat.map((data) => {
+    return data.map((data) => {
         const { id, first_name, last_name, email, job_title, department } = data
         return (
             <tr key={id}>
@@ -23,10 +16,11 @@ function renderTableData(props) {
                 <td>{last_name}</td>
                 <td>{email}</td>
                 <td>{job_title}</td>
-                <td className="filter" onClick={() => filterTable(department)}>{department}</td>
+                <td className="filter"><Link to={`/filter/${department}`}>{department}</Link></td>
             </tr>
         )
     })
 }
+
 
 export default renderTableData

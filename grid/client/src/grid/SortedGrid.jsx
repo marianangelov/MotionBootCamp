@@ -1,0 +1,38 @@
+import React, { useEffect, useState } from 'react';
+import RenderTableHeader from './TableHead';
+import RenderTableData from './TableBody';
+
+function SortedGrid(props) {
+    const key = props.match.params.key;
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+           
+           fetch(`http://localhost:5500/sort/${key}`)
+            .then(res => res.json())
+            .then(data => setData(data))
+            .catch(console.error) 
+        
+        
+    })
+    console.log(data);
+
+    return (
+        <div>
+            <table id='mock'>
+                <thead>
+                    <tr>
+                        <RenderTableHeader data={data} />
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <RenderTableData data={data} />
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+export default SortedGrid;
